@@ -1,6 +1,7 @@
 const dotenv = require("dotenv");
 
 require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-etherscan");
 
 dotenv.config();
 // This is a sample Hardhat task. To learn how to create your own go to
@@ -38,5 +39,11 @@ module.exports = {
   },
   paths: {
     artifacts: "./src/artifacts"
+  },
+  etherscan: {
+    // Your API key for Etherscan
+    // Obtain one at https://etherscan.io/
+    apiKey: "ZCMS2P2I8G3ITFS7RUVQMVDFDCDSJ7IZUN"
   }
+  
 };

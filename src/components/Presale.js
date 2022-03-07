@@ -33,6 +33,12 @@ function Presale() {
         const signer = provider.getSigner();
         const contract =  new ethers.Contract(crowdsaleAddress, CROWDSALE_ABI.abi, signer);
         const price = ethers.utils.parseEther(ethPrice.current.value);
+        const balance = ethers.utils.formatEther(await provider.getBalance(signer.getAddress()));
+
+        if (balance < ethPrice.current.value) {
+            alert('Insufficient Balance');
+            return;
+        }
         
         const transaction = await contract.buyTokens(account, {value: price.toString()});
         await transaction.wait();
@@ -54,7 +60,7 @@ function Presale() {
                 </div>
                 <div className="my-3">
                     <label className="text-lg">Rate</label>
-                    <input className="w-full h-12 rounded-lg p-2 text-xl focus:outline-none mt-1" type="text" value="0.00000180" disabled/>
+                    <input className="w-full h-12 rounded-lg p-2 text-xl focus:outline-none mt-1" type="text" value="1" disabled/>
                 </div>
 
                 <div className="mt-10">

@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Web3Modal from 'web3modal';
 import { GlobalContext } from "../context/GlobalContext";
 
@@ -18,8 +18,19 @@ const HeaderComponent = () => {
         const provider = new ethers.providers.Web3Provider(instance);
         const signer = provider.getSigner();
         const address = await signer.getAddress();
-        addAccount({ id: address })
+        addAccount({ id: address });
+        
     }
+    useEffect(()=>{
+        if(window.ethereum) {
+            window.ethereum.on('accountsChanged', accounts => {
+                addAccount({ id: accounts[0] })
+            })
+            window.ethereum.on('chainChanged', chainId => {
+                window.location.reload();
+            })
+        }
+    }, [account]);
     return (
         <div className="w-full flex items-center justify-between p-7 flex-col sm:flex-row">
             <div className="">
